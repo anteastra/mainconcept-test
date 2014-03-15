@@ -10,11 +10,11 @@ public abstract class Machine {
 	private String name;
 	private boolean busy = false;
 	private Task currentTask;
-	private int currentDuration;
-	private Object taskMonitor = new Object();
+	private int expectDuration;
+	private int duration;
 	
-	public Machine(String nName) {
-		name = nName;
+	public Machine(String name) {
+		this.name = name;
 	}
 
 	public String getName() {
@@ -22,22 +22,32 @@ public abstract class Machine {
 	}
 	
 	public boolean performTask(Task task) {
-		if (isBusy()) return false;
+		if (isBusy()) {
+			return false;
+		}
 		
 		busy = true;
 		currentTask = task;
 		
-		submitStart();
-		Random r = new Random();
-		currentDuration = r.nextInt(currentTask.maxDuration - currentTask.minDuration+1) 
-				+ currentTask.minDuration;
 		
+		Random r = new Random();
+		expectDuration = r.nextInt(currentTask.getMaxDuration() - currentTask.getMinDuration()+1) 
+				+ currentTask.getMinDuration();
+		submitMessage("task: \""+task.getName() + "\"; expect duration: " + expectDuration + " sec.");
+		submitStart();
+		
+		long durationMs = System.currentTimeMillis();
 		try {
-			synchronized (taskMonitor) {
-				taskMonitor.wait(currentDuration*1000);
-			}			
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			 
+			task.perform(expectDuration);
+			durationMs = System.currentTimeMillis() - durationMs;
+			duration = (int) (durationMs/1000);
+			
+		} catch (Exception e) {
+			durationMs = System.currentTimeMillis() - durationMs;
+			duration = (int) (durationMs/1000);
+			submitError();
+			return false;
 		}
 		
 		submitEnd();
@@ -55,16 +65,23 @@ public abstract class Machine {
 	}
 	
 	public String getStartString() {
-		return "started "+ getCurrentTask().Name + " on " 
-				+ getName() + " at " + new Date();
+		return "started \""+ getCurrentTask().getName() + "\" on \"" 
+				+ getName() + "\" at " + new Date();
 	}
 	
 	public String getEndString() {
-		return "finished "+ getCurrentTask().Name + " on " 
-				+ getName() + " at "+ new Date() + ", duration " + currentDuration + " sec.";
+		return "finished \""+ getCurrentTask().getName() + "\" on \"" 
+				+ getName() + "\" at "+ new Date() + ", duration " + duration + " sec.";
+	}
+	
+	public String getErrorString() {
+		return "error \""+ getCurrentTask().getName() + "\" on \"" 
+				+ getName() + "\" at "+ new Date() + ", duration " + duration + " sec.";
 	}
 	
 	public abstract void submitStart();
 	public abstract void submitEnd();
+	public abstract void submitError();
+	public abstract void submitMessage(String string);
 	
 }

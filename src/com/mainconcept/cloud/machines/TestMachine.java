@@ -1,8 +1,7 @@
 package com.mainconcept.cloud.machines;
 
-import java.util.Date;
-
 import com.mainconcept.cloud.Task;
+import com.mainconcept.cloud.Task.Priority;
 
 public class TestMachine extends Machine{
 
@@ -20,14 +19,22 @@ public class TestMachine extends Machine{
 		System.out.println(getEndString());
 	}
 	
+	@Override
+	public void submitError() {
+		System.out.println(getErrorString());
+	}
+	
+	@Override
+	public void submitMessage(String message) {
+		System.out.println(message);
+	}	
 	
 	public static void main(String ...strings) {
-		Task task = new Task();
-		task.Name = "task n.1";
-		task.maxDuration = 5;
-		task.minDuration = 5;
+		Task task = new Task("task n.1", 2, 2, Priority.High);
 		
 		Machine m = new TestMachine("machine n.1");
 		m.performTask(task);
 	}
+
+	
 }
