@@ -1,0 +1,1 @@
+<tasks qty="5">	<task name="task n.1" priority="2" mintime="5" maxtime="25"/>	<task name="task n.2" priority="2" mintime="5" maxtime="25"/>	<task name="task n.3" priority="3" mintime="5" maxtime="25"/>	<task name="task n.4" priority="1" mintime="5" maxtime="25"/>		<task name="task n.5" priority="3" mintime="5" maxtime="25"/>	</task>
