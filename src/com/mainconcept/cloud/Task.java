@@ -1,12 +1,17 @@
 package com.mainconcept.cloud;
 
-public class Task {
+import java.io.IOException;
+import java.io.Serializable;
+
+public class Task implements Serializable{
+	
+	private static final long serialVersionUID = -1890127076182137168L;
 	private int minDuration;
 	private int maxDuration;
 	private String name;
 	private Priority priority;
 	
-	private Object taskMonitor = new Object();
+	private transient Object taskMonitor = new Object();
 	
 	public Task(String name, int minDuration, int maxDuration, Priority priority) {
 		this.name = name;
@@ -45,8 +50,14 @@ public class Task {
 		}		
 	}
 	
+	private void readObject(java.io.ObjectInputStream in)
+		    throws IOException, ClassNotFoundException {
+		in.defaultReadObject();
+		taskMonitor = new Object();
+	}
+	
 
-	public enum Priority {
+	public enum Priority implements Serializable {
 		High,
 		Normal,
 		Low

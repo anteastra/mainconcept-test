@@ -1,5 +1,6 @@
 package com.mainconcept.cloud.machines;
 
+import java.io.ObjectOutputStream;
 import java.util.Date;
 import java.util.Random;
 
@@ -14,6 +15,9 @@ public abstract class Machine {
 	private int duration;
 	
 	public Machine(String name) {
+		if (name == null) {
+			throw new IllegalArgumentException("cannot create machine with name: null");
+		}
 		this.name = name;
 	}
 
@@ -21,43 +25,46 @@ public abstract class Machine {
 		return name;
 	}
 	
-	public boolean performTask(Task task) {
-		if (isBusy()) {
-			return false;
+	public boolean performTask(Task task, ObjectOutputStream os) {
+		
+		synchronized (this) {
+			if (isBusy()) {
+				return false;
+			}			
+			busy = true;
 		}
 		
-		busy = true;
 		currentTask = task;
 		
 		
 		Random r = new Random();
 		expectDuration = r.nextInt(currentTask.getMaxDuration() - currentTask.getMinDuration()+1) 
 				+ currentTask.getMinDuration();
-		submitMessage("task: \""+task.getName() + "\"; expect duration: " + expectDuration + " sec.");
-		submitStart();
+		//submitMessage(os, "task: \""+task.getName() + "\"; expect duration: " + expectDuration + " sec.");
+		
+		submitStart(os);
 		
 		long durationMs = System.currentTimeMillis();
 		try {
-			 
 			task.perform(expectDuration);
 			durationMs = System.currentTimeMillis() - durationMs;
 			duration = (int) (durationMs/1000);
 			
 		} catch (Exception e) {
 			durationMs = System.currentTimeMillis() - durationMs;
-			duration = (int) (durationMs/1000);
-			submitError();
-			return false;
+			duration = (int) (durationMs/1000);			
+			submitError(os);
+			busy = false;
+			return true;
 		}
 		
-		submitEnd();
+		submitEnd(os);
+		busy = false;		
 		return true;
 	}
 
 	private boolean isBusy() {
-		synchronized (this) {
-			return busy;
-		}
+		return busy;
 	}
 	
 	public Task getCurrentTask() {
@@ -79,9 +86,23 @@ public abstract class Machine {
 				+ getName() + "\" at "+ new Date() + ", duration " + duration + " sec.";
 	}
 	
-	public abstract void submitStart();
-	public abstract void submitEnd();
-	public abstract void submitError();
-	public abstract void submitMessage(String string);
+	public String getShutdownString() {
+		return "shutdown machine \""+ getName() + "\" at " + new Date();
+	}
+	
+	public String getStartUpString() {
+		return "startup machine \""+ getName() + "\" at " + new Date();
+	}
+	
+	public String getBusyString() {
+		return "busy machine \""+ getName() + "\" task \""+getCurrentTask().getName()
+				+"\" at " + new Date();
+	}
+	
+	public abstract void submitStart(ObjectOutputStream os);
+	public abstract void submitEnd(ObjectOutputStream os);
+	public abstract void submitError(ObjectOutputStream os);
+	public abstract void submitMessage(ObjectOutputStream os, String string);
+	public abstract void shutdownMessage(ObjectOutputStream os);
 	
 }

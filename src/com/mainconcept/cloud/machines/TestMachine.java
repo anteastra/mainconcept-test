@@ -1,5 +1,7 @@
 package com.mainconcept.cloud.machines;
 
+import java.io.ObjectOutputStream;
+
 import com.mainconcept.cloud.Task;
 import com.mainconcept.cloud.Task.Priority;
 
@@ -10,22 +12,27 @@ public class TestMachine extends Machine{
 	}
 
 	@Override
-	public void submitStart() {
+	public void submitStart(ObjectOutputStream os) {
 		System.out.println(getStartString());
 	}
 
 	@Override
-	public void submitEnd() {
+	public void submitEnd(ObjectOutputStream os) {
 		System.out.println(getEndString());
 	}
 	
 	@Override
-	public void submitError() {
+	public void submitError(ObjectOutputStream os) {
 		System.out.println(getErrorString());
 	}
 	
 	@Override
-	public void submitMessage(String message) {
+	public void shutdownMessage(ObjectOutputStream os) {
+		System.out.println(getShutdownString());
+	}
+	
+	@Override
+	public void submitMessage(ObjectOutputStream os, String message) {
 		System.out.println(message);
 	}	
 	
@@ -33,8 +40,10 @@ public class TestMachine extends Machine{
 		Task task = new Task("task n.1", 2, 2, Priority.High);
 		
 		Machine m = new TestMachine("machine n.1");
-		m.performTask(task);
+		m.performTask(task, null);
 	}
+
+	
 
 	
 }
