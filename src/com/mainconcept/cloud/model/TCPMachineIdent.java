@@ -21,7 +21,7 @@ public class TCPMachineIdent extends MachineIdent{
 		return getName()+" "+getPort();
 	}
 	
-	private int getPort() {
+	public int getPort() {
 		return port; 
 	}
 }

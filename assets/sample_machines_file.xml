@@ -1,1 +1,1 @@
-<machines qty="3">	<machine name="machine n.1" port="7301"/>	<machine name="machine n.2" port="7302"/>	<machine name="machine n.3" port="7303"/></machines>
+<machines qty="3">	<machine name="machine_n.1" port="7301"/>	<machine name="machine_n.2" port="7302"/>	<machine name="machine_n.3" port="7303"/></machines>
