@@ -4,7 +4,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import com.mainconcept.cloud.machines.Message.MessageType;
+import com.mainconcept.cloud.model.Message;
+import com.mainconcept.cloud.model.Message.MessageType;
 
 public class TCPMachineServer extends Thread{
 	

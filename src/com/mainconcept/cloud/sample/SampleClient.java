@@ -4,8 +4,8 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import com.mainconcept.cloud.Task;
-import com.mainconcept.cloud.Task.Priority;
+import com.mainconcept.cloud.model.Task;
+import com.mainconcept.cloud.model.Task.Priority;
 
 public class SampleClient {  
 	public static void main(String args[]){  

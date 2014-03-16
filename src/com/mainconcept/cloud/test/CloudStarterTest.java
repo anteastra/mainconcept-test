@@ -1,4 +1,4 @@
-package com.mainconcept.cloud;
+package com.mainconcept.cloud.test;
 
 import java.io.IOException;
 

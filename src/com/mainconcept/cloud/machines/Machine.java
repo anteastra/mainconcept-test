@@ -4,7 +4,7 @@ import java.io.ObjectOutputStream;
 import java.util.Date;
 import java.util.Random;
 
-import com.mainconcept.cloud.Task;
+import com.mainconcept.cloud.model.Task;
 
 public abstract class Machine {
 
@@ -13,6 +13,12 @@ public abstract class Machine {
 	private Task currentTask;
 	private int expectDuration;
 	private int duration;
+	
+	public abstract void submitStart(ObjectOutputStream os);
+	public abstract void submitEnd(ObjectOutputStream os);
+	public abstract void submitError(ObjectOutputStream os);
+	public abstract void submitMessage(ObjectOutputStream os, String string);
+	public abstract void shutdownMessage(ObjectOutputStream os);
 	
 	public Machine(String name) {
 		if (name == null) {
@@ -26,7 +32,6 @@ public abstract class Machine {
 	}
 	
 	public boolean performTask(Task task, ObjectOutputStream os) {
-		
 		synchronized (this) {
 			if (isBusy()) {
 				return false;
@@ -59,11 +64,7 @@ public abstract class Machine {
 		submitEnd(os);
 		busy = false;		
 		return true;
-	}
-
-	private boolean isBusy() {
-		return busy;
-	}
+	}	
 	
 	public Task getCurrentTask() {
 		return currentTask;
@@ -101,11 +102,9 @@ public abstract class Machine {
 		return "busy machine \""+ getName() + "\" task \""+getCurrentTask().getName()
 				+"\" at " + new Date();
 	}
-	
-	public abstract void submitStart(ObjectOutputStream os);
-	public abstract void submitEnd(ObjectOutputStream os);
-	public abstract void submitError(ObjectOutputStream os);
-	public abstract void submitMessage(ObjectOutputStream os, String string);
-	public abstract void shutdownMessage(ObjectOutputStream os);
+		
+	private boolean isBusy() {
+		return busy;
+	}
 	
 }

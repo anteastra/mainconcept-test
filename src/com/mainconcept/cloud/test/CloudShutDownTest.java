@@ -1,17 +1,17 @@
-package com.mainconcept.cloud;
+package com.mainconcept.cloud.test;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import com.mainconcept.cloud.Task.Priority;
-import com.mainconcept.cloud.machines.Message;
-import com.mainconcept.cloud.machines.Message.MessageType;
+import com.mainconcept.cloud.model.Message;
+import com.mainconcept.cloud.model.Message.MessageType;
 
 public class CloudShutDownTest {
 
 	public static void main(String...strings) {
 		try {
+			@SuppressWarnings("resource")
 			Socket s = new Socket("localhost", 7401);
 			ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
 			os.writeObject(new Message(MessageType.REQUEST_PERFORM_SHUTDOWN, null, null));
@@ -26,6 +26,7 @@ public class CloudShutDownTest {
 		}
 		
 		try {
+			@SuppressWarnings("resource")
 			Socket s = new Socket("localhost", 7402);
 			ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
 			os.writeObject(new Message(MessageType.REQUEST_PERFORM_SHUTDOWN, null, null));

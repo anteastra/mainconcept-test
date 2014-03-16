@@ -1,2 +1,2 @@
-java -cp CloudDispatcher.jar com.mainconcept.cloud.CloudClientTest
+java -cp CloudDispatcher.jar com.mainconcept.cloud.test.CloudClientTest
 pause

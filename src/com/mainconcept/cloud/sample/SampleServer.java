@@ -5,7 +5,7 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import com.mainconcept.cloud.Task;
+import com.mainconcept.cloud.model.Task;
 
 public class SampleServer  {  
 	

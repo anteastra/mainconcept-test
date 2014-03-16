@@ -5,7 +5,8 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 
-import com.mainconcept.cloud.machines.Message.MessageType;
+import com.mainconcept.cloud.model.Message;
+import com.mainconcept.cloud.model.Message.MessageType;
 
 public class TCPMachine extends Machine{
 	
@@ -44,6 +45,7 @@ public class TCPMachine extends Machine{
 
 	private void startupServer() {
 		try {
+			@SuppressWarnings("resource")
 			ServerSocket server = new ServerSocket(port, 0,
 					InetAddress.getByName(host));
 			System.out.println("machine \""+getName()+"\" started");

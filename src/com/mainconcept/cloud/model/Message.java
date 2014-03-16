@@ -1,8 +1,8 @@
-package com.mainconcept.cloud.machines;
+package com.mainconcept.cloud.model;
 
 import java.io.Serializable;
 
-import com.mainconcept.cloud.Task;
+import com.mainconcept.cloud.model.Task;
 
 public class Message implements Serializable{
 

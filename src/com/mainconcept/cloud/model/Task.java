@@ -1,4 +1,4 @@
-package com.mainconcept.cloud;
+package com.mainconcept.cloud.model;
 
 import java.io.IOException;
 import java.io.Serializable;
