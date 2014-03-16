@@ -7,14 +7,7 @@ public class CloudStarterTest {
 	public static void main(String ... args) {
 		System.out.println("start of cloud starter");
 		startMachine();
-		System.out.println("cloud starter!!!");
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		System.out.println("cloud started!!!");		
 	}
 	
 	public static void startMachine() {

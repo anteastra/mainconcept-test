@@ -24,7 +24,7 @@ public class CloudShutDownTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		/*
+		
 		try {
 			Socket s = new Socket("localhost", 7402);
 			ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
@@ -33,7 +33,7 @@ public class CloudShutDownTest {
 			ObjectInputStream is = new ObjectInputStream(s.getInputStream());
 			Message msg = (Message) is.readObject();
 			
-			System.out.println(msg);
+			System.out.println(msg.getMessage());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -47,11 +47,11 @@ public class CloudShutDownTest {
 			ObjectInputStream is = new ObjectInputStream(s.getInputStream());
 			Message msg = (Message) is.readObject();
 			
-			System.out.println(msg);
+			System.out.println(msg.getMessage());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
+		}
 		
 	}
 }
