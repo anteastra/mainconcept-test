@@ -22,15 +22,21 @@ public class CloudClientTest {
 			ObjectInputStream is = new ObjectInputStream(s.getInputStream());
 			Message msg = (Message) is.readObject();
 			
+			if (msg.getMessageType() == MessageType.MESSAGE) {
+				System.out.println(msg.getMessage());
+				msg = (Message) is.readObject();
+			}
+			
 			switch (msg.getMessageType()) {
 			case TASK_START:
 				System.out.println(msg.getMessage());
-				handleTaskStart(is, os);
-				
+				handleTaskStart(is, os);				
 				break;
 			case TASK_BUSY:
 				System.out.println(msg.getMessage());
+				break;
 			default:
+				System.out.println(msg.getMessage());
 				break;
 			}
 			

@@ -35,12 +35,10 @@ public abstract class Machine {
 		}
 		
 		currentTask = task;
-		
-		
 		Random r = new Random();
 		expectDuration = r.nextInt(currentTask.getMaxDuration() - currentTask.getMinDuration()+1) 
 				+ currentTask.getMinDuration();
-		//submitMessage(os, "task: \""+task.getName() + "\"; expect duration: " + expectDuration + " sec.");
+		submitMessage(os, getExpectedTimeString());
 		
 		submitStart(os);
 		
@@ -74,6 +72,11 @@ public abstract class Machine {
 	public String getStartString() {
 		return "started \""+ getCurrentTask().getName() + "\" on \"" 
 				+ getName() + "\" at " + new Date();
+	}
+	
+	public String getExpectedTimeString() {
+		return "task: \""+getCurrentTask().getName() + "\"; expect duration: "
+				+ expectDuration + " sec.";
 	}
 	
 	public String getEndString() {

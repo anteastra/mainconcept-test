@@ -2,6 +2,8 @@ package com.mainconcept.cloud;
 
 import java.io.IOException;
 
+import com.mainconcept.cloud.helpers.Streamer;
+
 public class CloudStarterTest {
 	
 	public static void main(String ... args) {
@@ -12,9 +14,20 @@ public class CloudStarterTest {
 	
 	public static void startMachine() {
 		try {
-			Runtime.getRuntime().exec("java -cp CloudDispatcher.jar com.mainconcept.cloud.machines.TCPMachine name1 7401");
-			Runtime.getRuntime().exec("java -cp CloudDispatcher.jar com.mainconcept.cloud.machines.TCPMachine name2 7402");
-			Runtime.getRuntime().exec("java -cp CloudDispatcher.jar com.mainconcept.cloud.machines.TCPMachine name3 7403");
+			Streamer error;
+			Streamer output;
+			Process process = Runtime.getRuntime().exec("java -cp CloudDispatcher.jar com.mainconcept.cloud.machines.TCPMachine name1 7401");
+			error = new Streamer(process.getErrorStream());
+			output = new Streamer(process.getInputStream());
+			error.start();
+			output.start();
+			
+			process = Runtime.getRuntime().exec("java -cp CloudDispatcher.jar com.mainconcept.cloud.machines.TCPMachine name2 7402");
+			error = new Streamer(process.getErrorStream());
+			output = new Streamer(process.getInputStream());
+			error.start();
+			output.start();			
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
