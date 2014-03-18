@@ -19,8 +19,7 @@ public class JobExecutor {
 				
 			KeyHandler keyHandler = new KeyHandler(true, true, args);	
 			
-			List<Task> tasks = keyHandler.getTaskList();
-			
+			List<Task> tasks = keyHandler.getTaskList();			
 			Collections.sort(tasks);
 			
 			List<MachineIdent> machines = keyHandler.getMachinesIdentList();

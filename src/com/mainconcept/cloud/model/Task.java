@@ -59,8 +59,8 @@ public class Task implements Serializable, Comparable{
 			return 1;
 		}
 		
-		return ((Task) o).getPriority().getIntPriority() - 
-				getPriority().getIntPriority();
+		return getPriority().getIntPriority() 
+				- ((Task) o).getPriority().getIntPriority();
 	}
 	
 	private void readObject(java.io.ObjectInputStream in)

@@ -13,7 +13,7 @@ public class SampleClient {
 			Socket s = new Socket("localhost",2002);  
 			OutputStream os = s.getOutputStream();  
 			ObjectOutputStream oos = new ObjectOutputStream(os);  
-			Task to = new Task("name 1" , 5, 5, Priority.Normal);			
+			Task to = new Task("name 1" , 5, 5, Priority.NORMAL);			
 			oos.writeObject(to);  
 			oos.writeObject(new String("another object from the client"));  
 			oos.close();

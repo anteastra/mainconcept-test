@@ -17,7 +17,7 @@ public class CloudClientTest {
 			@SuppressWarnings("resource")
 			Socket s = new Socket("localhost", 7401);
 			ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
-			Task task = new Task("task 1", 5, 5, Priority.Normal);
+			Task task = new Task("task 1", 5, 5, Priority.NORMAL);
 			os.writeObject(new Message(MessageType.REQUEST_PERFORM_TASK, null, task));
 			
 			ObjectInputStream is = new ObjectInputStream(s.getInputStream());

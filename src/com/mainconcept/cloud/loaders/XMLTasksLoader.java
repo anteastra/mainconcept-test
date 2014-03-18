@@ -37,7 +37,7 @@ public class XMLTasksLoader implements TasksLoader{
 					Element element = (Element) node;
 					String name = element.getAttribute("name");
 					//TODO change priority reading
-					Priority priority = Priority.Normal;
+					Priority priority = Priority.valueOf(element.getAttribute("priority").toUpperCase());
 					int mintime = Integer.parseInt(element.getAttribute("mintime"));
 					int maxtime = Integer.parseInt(element.getAttribute("maxtime"));
 					list.add(new Task(name, mintime, maxtime, priority));

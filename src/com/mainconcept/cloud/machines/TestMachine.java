@@ -37,7 +37,7 @@ public class TestMachine extends Machine{
 	}	
 	
 	public static void main(String ...strings) {
-		Task task = new Task("task n.1", 2, 2, Priority.High);
+		Task task = new Task("task n.1", 2, 2, Priority.NORMAL);
 		
 		Machine m = new TestMachine("machine n.1");
 		m.performTask(task, null);
