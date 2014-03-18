@@ -1,5 +1,6 @@
 package com.mainconcept.cloud;
 
+import com.mainconcept.cloud.handlers.KeyHandler;
 import com.mainconcept.cloud.helpers.Streamer;
 import com.mainconcept.cloud.loaders.MachinesLoader;
 import com.mainconcept.cloud.loaders.MachinesLoaderFactory;
@@ -14,23 +15,10 @@ public class CloudStarter {
 		System.out.println();
 		System.out.println();
 		System.out.println("---------Startup cloud---------");
+				
+		KeyHandler keyHandler = new KeyHandler(true, false, args);			
 		
-		if ((args.length < 2) || (!args[0].toLowerCase().equals(MACHINES_KEY))) {
-			throw new IllegalArgumentException(MACHINES_KEY + " file expected");
-		}
-		
-		MachinesLoader machinesLoader = MachinesLoaderFactory.getMachinesLoader(args[1]);
-		if (machinesLoader.getMachineIdentList() == null) {
-			System.out.println("error in machine loader");
-			System.exit(0);
-		}
-		
-		if (machinesLoader.getMachineIdentList().size() == 0) {
-			System.out.println("there is no machine start");
-			System.exit(0);
-		}		
-		
-		for (MachineIdent mi: machinesLoader.getMachineIdentList()) {
+		for (MachineIdent mi: keyHandler.getMachinesIdentList()) {
 			startMachine(mi);
 		}
 	}

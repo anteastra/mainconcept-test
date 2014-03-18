@@ -4,6 +4,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import com.mainconcept.cloud.handlers.KeyHandler;
 import com.mainconcept.cloud.loaders.MachinesLoader;
 import com.mainconcept.cloud.loaders.MachinesLoaderFactory;
 import com.mainconcept.cloud.model.MachineIdent;
@@ -25,20 +26,11 @@ public class CloudKiller {
 			throw new IllegalArgumentException(MACHINES_KEY + " file expected");
 		}
 		
-		MachinesLoader machinesLoader = MachinesLoaderFactory.getMachinesLoader(args[1]);
-		if (machinesLoader.getMachineIdentList() == null) {
-			System.out.println("error in machine loader");
-			System.exit(0);
-		}
+		KeyHandler keyHandler = new KeyHandler(true, false, args);			
 		
-		if (machinesLoader.getMachineIdentList().size() == 0) {
-			System.out.println("there is no machine start");
-			System.exit(0);
-		}		
-		
-		for (MachineIdent mi: machinesLoader.getMachineIdentList()) {
+		for (MachineIdent mi: keyHandler.getMachinesIdentList()) {
 			downMachine(mi);
-		}
+		}		
 	}
 	
 	public static void downMachine(MachineIdent mi) {
