@@ -29,7 +29,6 @@ public class MachinesLoaderFactory {
 	}
 	
 	private static boolean checkOniniType(String fileName) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

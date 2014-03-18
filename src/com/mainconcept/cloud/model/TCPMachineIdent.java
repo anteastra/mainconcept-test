@@ -17,7 +17,6 @@ public class TCPMachineIdent extends MachineIdent{
 
 	@Override
 	public String getStartupParametrs() {
-		// TODO Auto-generated method stub
 		return getName()+" "+getPort();
 	}
 	

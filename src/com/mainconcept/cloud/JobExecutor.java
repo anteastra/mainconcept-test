@@ -26,6 +26,16 @@ public class JobExecutor {
 			
 			MachinesController controller = new MachinesController();
 			controller.appendMachines(machines);
+			
+			for (Task task: tasks) {
+				controller.sendToFreeMachine(task);
+			}
+			
+			List<String> msgs = controller.getExecutedTaskMessages();
+			
+			for (String msg: msgs) {
+				System.out.println(msg);
+			}
 		
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
