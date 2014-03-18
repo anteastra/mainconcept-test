@@ -5,8 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import com.mainconcept.cloud.model.Priority;
 import com.mainconcept.cloud.model.Task;
-import com.mainconcept.cloud.model.Task.Priority;
 import com.mainconcept.cloud.model.Message;
 import com.mainconcept.cloud.model.Message.MessageType;
 

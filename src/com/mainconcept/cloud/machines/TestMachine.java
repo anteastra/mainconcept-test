@@ -2,8 +2,8 @@ package com.mainconcept.cloud.machines;
 
 import java.io.ObjectOutputStream;
 
+import com.mainconcept.cloud.model.Priority;
 import com.mainconcept.cloud.model.Task;
-import com.mainconcept.cloud.model.Task.Priority;
 
 public class TestMachine extends Machine{
 

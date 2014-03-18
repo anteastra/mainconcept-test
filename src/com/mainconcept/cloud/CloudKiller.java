@@ -5,8 +5,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import com.mainconcept.cloud.handlers.KeyHandler;
-import com.mainconcept.cloud.loaders.MachinesLoader;
-import com.mainconcept.cloud.loaders.MachinesLoaderFactory;
 import com.mainconcept.cloud.model.MachineIdent;
 import com.mainconcept.cloud.model.Message;
 import com.mainconcept.cloud.model.Message.MessageType;

@@ -56,13 +56,6 @@ public class Task implements Serializable{
 		taskMonitor = new Object();
 	}
 	
-
-	public enum Priority implements Serializable {
-		High,
-		Normal,
-		Low
-	}
-	
 }
 
 
