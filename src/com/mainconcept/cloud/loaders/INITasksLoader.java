@@ -4,7 +4,11 @@ import java.util.List;
 
 import com.mainconcept.cloud.model.Task;
 
-public class INITaskLoader implements TasksLoader {
+public class INITasksLoader implements TasksLoader {
+
+	public INITasksLoader(String path) {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public List<Task> getTaskList() {

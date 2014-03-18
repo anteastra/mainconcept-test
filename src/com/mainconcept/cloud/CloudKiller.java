@@ -12,18 +12,12 @@ import com.mainconcept.cloud.model.TCPMachineIdent;
 
 public class CloudKiller {
 
-	private static final String MACHINES_KEY = "-fmachines";
-
 	public static void main(String ... args) {
 		
 		System.out.println();
 		System.out.println();
 		System.out.println("---------Shutdown cloud---------");
-		
-		if ((args.length < 2) || (!args[0].toLowerCase().equals(MACHINES_KEY))) {
-			throw new IllegalArgumentException(MACHINES_KEY + " file expected");
-		}
-		
+				
 		KeyHandler keyHandler = new KeyHandler(true, false, args);			
 		
 		for (MachineIdent mi: keyHandler.getMachinesIdentList()) {

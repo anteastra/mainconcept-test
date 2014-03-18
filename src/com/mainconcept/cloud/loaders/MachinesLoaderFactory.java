@@ -6,23 +6,24 @@ import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 import com.mainconcept.cloud.helpers.SimpleXMLErrorHandler;
+import com.mainconcept.cloud.model.SrcType;
 
 public class MachinesLoaderFactory {
 
-	public static MachinesLoader getMachinesLoader(String fileName) {
+	public static MachinesLoader getMachinesLoader(String path) {
 		SrcType type = SrcType.UNKNOWN;
 		
-		if (checkOnXmlType(fileName)) type = SrcType.XML;
-		if (checkOniniType(fileName)) type = SrcType.INI;
+		if (checkOnXmlType(path)) type = SrcType.XML;
+		if (checkOniniType(path)) type = SrcType.INI;
 		
 		switch (type) {
 		case XML:
-			return new XMLMachinesLoader(fileName);
+			return new XMLMachinesLoader(path);
 		case INI:
-			return new INIMachinesLoader(fileName);
+			return new INIMachinesLoader(path);
 		case UNKNOWN:			
 		default:
-			throw new IllegalArgumentException("unknown machine loader source: "+ fileName);
+			throw new IllegalArgumentException("unknown machine loader source: "+ path);
 		}
 		
 	}
@@ -56,11 +57,4 @@ public class MachinesLoaderFactory {
 		
 		return false;
 	}
-
-	private enum SrcType {
-		XML,
-		INI,
-		UNKNOWN
-	}
-
 }

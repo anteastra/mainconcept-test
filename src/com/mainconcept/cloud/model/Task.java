@@ -3,7 +3,7 @@ package com.mainconcept.cloud.model;
 import java.io.IOException;
 import java.io.Serializable;
 
-public class Task implements Serializable{
+public class Task implements Serializable, Comparable{
 	
 	private static final long serialVersionUID = -1890127076182137168L;
 	private int minDuration;
@@ -50,12 +50,24 @@ public class Task implements Serializable{
 		}		
 	}
 	
+	@Override
+	public int compareTo(Object o) {
+		if (o == null) {
+			return 1;
+		}
+		if (!(o instanceof Task)) {
+			return 1;
+		}
+		
+		return ((Task) o).getPriority().getIntPriority() - 
+				getPriority().getIntPriority();
+	}
+	
 	private void readObject(java.io.ObjectInputStream in)
 		    throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
 		taskMonitor = new Object();
-	}
-	
+	}	
 }
 
 
