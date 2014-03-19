@@ -1,9 +1,11 @@
 package com.mainconcept.cloud;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import com.mainconcept.cloud.handlers.KeyHandler;
+import com.mainconcept.cloud.handlers.MachineHandler;
 import com.mainconcept.cloud.model.MachineIdent;
 import com.mainconcept.cloud.model.Task;
 
@@ -13,7 +15,7 @@ public class JobExecutor {
 	public static void main(String ... args) {
 		System.out.println();
 		System.out.println();
-		System.out.println("---------Startup cloud---------");
+		System.out.println("---------Startup cloud job executor---------");
 		
 		try {
 				
@@ -22,10 +24,10 @@ public class JobExecutor {
 			List<Task> tasks = keyHandler.getTaskList();			
 			Collections.sort(tasks);
 			
-			List<MachineIdent> machines = keyHandler.getMachinesIdentList();
-			
+			List<MachineIdent> machinesIdent = keyHandler.getMachinesIdentList();
+						
 			MachinesController controller = new MachinesController();
-			controller.appendMachines(machines);
+			controller.appendMachines(machinesIdent);
 			
 			for (Task task: tasks) {
 				controller.sendToFreeMachine(task);

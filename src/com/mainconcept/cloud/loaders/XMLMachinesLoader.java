@@ -12,6 +12,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.mainconcept.cloud.handlers.TCPMachineHandler;
 import com.mainconcept.cloud.model.MachineIdent;
 import com.mainconcept.cloud.model.TCPMachineIdent;
 
@@ -35,7 +36,9 @@ public class XMLMachinesLoader implements MachinesLoader{
 					Element element = (Element) node;
 					String name = element.getAttribute("name");
 					int port = Integer.parseInt(element.getAttribute("port"));
-					list.add(new TCPMachineIdent(name, port));
+					MachineIdent mi = new TCPMachineIdent(name, port);
+					mi.setHandler(new TCPMachineHandler());
+					list.add(mi);
 				}
 			}
 		} catch(Exception e) {

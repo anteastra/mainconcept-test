@@ -1,5 +1,5 @@
 package com.mainconcept.cloud.handlers;
 
-public interface MachinesHandler {
+public interface MachineHandler {
 
 }
