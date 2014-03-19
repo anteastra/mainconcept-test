@@ -15,27 +15,57 @@ public class KeyHandler {
 	
 	private static String MACHINE_KEY = "-fmachines";
 	private static String TASK_KEY = "-ftasks";
+	private static String START = "-start";
+	private static String STOP = "-stop";
 	
 	private List<MachineIdent> mList = new ArrayList<MachineIdent>();
 	private List<Task> tList = new ArrayList<Task>();
+	private boolean start = false;
+	private boolean stop = false;
 	
 	private String[] keys;
 	
-	public KeyHandler(boolean isMachinesExpected, boolean isTasksExpected, String ... args) {
+	public KeyHandler(String ... args) {
 		
-		keys = args;		
+		keys = args;
 		
-		if (isMachinesExpected) {
-			String machineSource = getMachineSource();
+		String machineSource = getMachineSource();
+
+		if (machineSource != null) {
 			MachinesLoader machinesLoader = MachinesLoaderFactory.getMachinesLoader(machineSource);
 			mList = machinesLoader.getMachineIdentList();
 		}
 		
-		if (isTasksExpected) {
-			String taskSource = getTaskSource();
+		if (getMachineStop()) {
+			stop = true;
+			return;
+			
+		} else if (getMachineStart()) {
+			start = true;
+		}
+	
+		String taskSource = getTaskSource();
+		
+		if (taskSource != null) {
 			TasksLoader tasksLoader = TasksLoaderFactory.getTasksLoader(taskSource);
 			tList = tasksLoader.getTaskList();
 		}
+	}	
+
+	public List<Task> getTaskList() {
+		return tList;		
+	}
+	
+	public List<MachineIdent> getMachinesIdentList() {
+		return mList;		
+	}
+	
+	public boolean isStarting() {
+		return start;
+	}
+
+	public boolean isStoping() {
+		return stop;
 	}
 	
 	private String getTaskSource() {
@@ -44,7 +74,7 @@ public class KeyHandler {
 				return keys[i+1];
 			}
 		}
-		throw new IllegalArgumentException("there is no tasks key");
+		return null;
 	}
 
 	private String getMachineSource() {
@@ -53,15 +83,26 @@ public class KeyHandler {
 				return keys[i+1];
 			}
 		}
-		throw new IllegalArgumentException("there is no machines key");
-	}
-
-	public List<Task> getTaskList() {
-		return tList;		
+		return null;
 	}
 	
-	public List<MachineIdent> getMachinesIdentList() {
-		return mList;		
+
+	private boolean getMachineStop() {
+		for (int i=0; i < (keys.length); i++) {
+			if (keys[i].toLowerCase().equals(STOP)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean getMachineStart() {
+		for (int i=0; i < (keys.length); i++) {
+			if (keys[i].toLowerCase().equals(START)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
