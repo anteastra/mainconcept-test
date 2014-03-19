@@ -1,11 +1,9 @@
 package com.mainconcept.cloud;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import com.mainconcept.cloud.handlers.KeyHandler;
-import com.mainconcept.cloud.handlers.MachineHandler;
 import com.mainconcept.cloud.model.MachineIdent;
 import com.mainconcept.cloud.model.Task;
 
@@ -27,7 +25,7 @@ public class JobExecutor {
 			List<MachineIdent> machinesIdent = keyHandler.getMachinesIdentList();
 						
 			MachinesController controller = new MachinesController();
-			controller.appendMachines(machinesIdent);
+			controller.setMachines(machinesIdent);
 			
 			for (Task task: tasks) {
 				controller.sendToFreeMachine(task);

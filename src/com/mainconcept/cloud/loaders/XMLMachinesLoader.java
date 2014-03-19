@@ -36,8 +36,9 @@ public class XMLMachinesLoader implements MachinesLoader{
 					Element element = (Element) node;
 					String name = element.getAttribute("name");
 					int port = Integer.parseInt(element.getAttribute("port"));
+					String host = element.getAttribute("host");
 					MachineIdent mi = new TCPMachineIdent(name, port);
-					mi.setHandler(new TCPMachineHandler());
+					mi.setHandler(new TCPMachineHandler(host, port));
 					list.add(mi);
 				}
 			}

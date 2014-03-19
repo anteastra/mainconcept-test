@@ -9,7 +9,7 @@
 	<property name="assets.dir" value="assets"/>
 	<property name="classes.dir" value="${assemble.dir}/classes"/>	
 	<property name="output.dir" value="${assemble.dir}/output"/>
-	<property name="main-class" value="com.mainconcept.Dispatcher"/>
+	<property name="main-class" value="com.mainconcept.cloud.JobExecutor"/>
 	<property name="project_jar" value="CloudDispatcher.jar"/>
 	
 	<target name="compile">
