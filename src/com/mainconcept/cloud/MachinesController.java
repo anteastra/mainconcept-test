@@ -31,19 +31,29 @@ public class MachinesController {
 		}		
 	}
 
-	public void sendToFreeMachine(Task task) {
+	public void sendToFreeMachine(final Task task) {
 		if (freeMachinesQueue == null) {
 			throw new IllegalStateException("machines list is null. Check you appended machines");
 		}
 		
-		//need to start new thread here
-		try {
-			MachineIdent mi = freeMachinesQueue.take();
-			mi.getMachineHandler().handleTask(task);
-			freeMachinesQueue.put(mi);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		//TODO need to start new thread here
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					MachineIdent mi;
+					try {
+						mi = freeMachinesQueue.take();
+						mi.getMachineHandler().handleTask(task);
+						freeMachinesQueue.put(mi);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				
+			}).start();
+					
 	}
 
 	public List<String> getExecutedTaskMessages() {
