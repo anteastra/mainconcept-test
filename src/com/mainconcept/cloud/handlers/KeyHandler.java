@@ -38,7 +38,6 @@ public class KeyHandler {
 		
 		if (getMachineStop()) {
 			stop = true;
-			return;
 			
 		} else if (getMachineStart()) {
 			start = true;

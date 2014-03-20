@@ -22,6 +22,8 @@ public class JobExecutor {
 				controller.sendToFreeMachine(task);
 			}
 			
+			//TODO need wait here for completing all tasks
+			
 			List<String> msgs = controller.getExecutedTaskMessages();
 			
 			for (String msg: msgs) {

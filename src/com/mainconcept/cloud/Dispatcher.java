@@ -21,15 +21,13 @@ public class Dispatcher {
 			CloudStarter.startMachines(machines);
 		}
 		
-		if (keyHandler.isStoping()) {
-			CloudKiller.downMachines(machines);
-			return;
-		}
-		
 		if (keyHandler.getTaskList().size()>0) {
 			JobExecutor.dispatch(tasks, machines);
 		}
 		
+		if (keyHandler.isStoping()) {
+			CloudKiller.downMachines(machines);
+		}
 	}
 
 }
