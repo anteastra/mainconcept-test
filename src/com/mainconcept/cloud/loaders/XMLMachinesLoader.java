@@ -43,7 +43,7 @@ public class XMLMachinesLoader implements MachinesLoader{
 				}
 			}
 		} catch(Exception e) {
-			//TODO change exception handle
+			throw new RuntimeException("Error handle file "+fileName +" "+e.getMessage());
 		}
 		
 	}

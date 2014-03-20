@@ -1,14 +1,15 @@
 <project name="mainconcept-test" default="build">
 	
-	<target name="build" depends="jar_project"/>
+	<target name="build" depends="jar_project, junit"/>
 	<!-- <target name="run" depends="jar_project, run_project"/> -->
 	
 	<property name="src.dir" value="src"/>
-	<property name="test_src.dir" value="test"/>
+	<property name="srcTest.dir" value="srcTest"/>
 	<property name="assemble.dir" value="assemble"/>
 	<property name="assets.dir" value="assets"/>
 	<property name="classes.dir" value="${assemble.dir}/classes"/>	
 	<property name="output.dir" value="${assemble.dir}/output"/>
+	<property name="report.dir" value="${assemble.dir}/report"/>
 	<property name="main-class" value="com.mainconcept.cloud.Dispatcher"/>
 	<property name="project_jar" value="CloudDispatcher.jar"/>
 	
@@ -29,6 +30,37 @@
 		<copy todir="${output.dir}">
 		    <fileset dir="${assets.dir}"/>
 		</copy>
+	</target>
+	
+	<target name="compile-unit">
+		<mkdir dir="${classes.dir}/tests"/>
+		<path id="unit.jars">
+			<fileset dir="${output.dir}">
+		   		<include name="**/*.jar"/>
+			</fileset>
+			<fileset dir="lib">
+		   		<include name="**/*.jar"/>
+			</fileset>
+		</path>
+		<javac includeantruntime="false" srcdir="${srcTest.dir}" destdir="${classes.dir}/tests" classpathref="unit.jars"/>
+	</target>
+	
+	
+	<target name="junit"  depends="compile-unit">
+	     <mkdir dir="${report.dir}"/>
+	     <junit printsummary="withOutAndErr" haltonfailure="yes" showoutput="yes" dir="${output.dir}" fork="yes">
+	        <classpath>
+	        	<pathelement location="lib/junit-4.11.jar"/>
+	        	<pathelement location="lib/hamcrest-core-1.3.jar"/>
+	        	<pathelement location="${output.dir}/${project_jar}"/>
+	        	<pathelement path="${classes.dir}/tests"/>
+	        </classpath>
+
+	     	<test name="com.mainconcept.cloud.AllTests"
+	     	             haltonfailure="no" outfile="${report.dir}/test-result">
+	     	      <formatter type="plain"/>
+	     	</test>
+	    </junit>
 	</target>
 	
 </project>

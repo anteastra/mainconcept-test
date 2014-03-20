@@ -12,9 +12,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.mainconcept.cloud.model.MachineIdent;
 import com.mainconcept.cloud.model.Priority;
-import com.mainconcept.cloud.model.TCPMachineIdent;
 import com.mainconcept.cloud.model.Task;
 
 public class XMLTasksLoader implements TasksLoader{
@@ -36,7 +34,6 @@ public class XMLTasksLoader implements TasksLoader{
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
 					Element element = (Element) node;
 					String name = element.getAttribute("name");
-					//TODO change priority reading
 					Priority priority = Priority.valueOf(element.getAttribute("priority").toUpperCase());
 					int mintime = Integer.parseInt(element.getAttribute("mintime"));
 					int maxtime = Integer.parseInt(element.getAttribute("maxtime"));
@@ -44,7 +41,7 @@ public class XMLTasksLoader implements TasksLoader{
 				}
 			}
 		} catch(Exception e) {
-			//TODO change exception handle
+			throw new RuntimeException("Error handle file "+fileName);
 		}
 		
 	}	
