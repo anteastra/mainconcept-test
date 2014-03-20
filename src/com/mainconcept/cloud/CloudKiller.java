@@ -19,6 +19,8 @@ public class CloudKiller {
 				
 		for (MachineIdent mi: machines) {
 			try {
+				System.out.println(mi.getName()+": stop machine");
+				
 				@SuppressWarnings("resource")
 				Socket s = new Socket("localhost", ((TCPMachineIdent)mi).getPort());
 				ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());

@@ -8,13 +8,19 @@ import com.mainconcept.cloud.model.Task;
 
 public class JobExecutor {
 	
-	@SuppressWarnings("unchecked")
 	public static void dispatch(List<Task> tasks, List<MachineIdent> machines) {
 		System.out.println();
 		System.out.println("---------Startup cloud job executor---------");
 		
 		try {
 			Collections.sort(tasks);
+			
+			System.out.println("Task list in perform order:");
+			for (Task task: tasks) {
+				System.out.println(task);
+			}
+			System.out.println();
+			
 			MachinesController controller = new MachinesController();
 			controller.setMachines(machines);
 			
@@ -22,10 +28,11 @@ public class JobExecutor {
 				controller.sendToFreeMachine(task);
 			}
 			
-			//TODO need wait here for completing all tasks
+			controller.waitForTasks();
 			
 			List<String> msgs = controller.getExecutedTaskMessages();
 			
+			//TODO here should be result of performing tasks
 			for (String msg: msgs) {
 				System.out.println(msg);
 			}

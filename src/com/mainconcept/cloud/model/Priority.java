@@ -22,4 +22,9 @@ public enum Priority implements Serializable {
 	public String getStringPriority() {
 		return priorityString;
 	}
+	
+	@Override
+	public String toString() {
+		return priorityString;
+	}
 }

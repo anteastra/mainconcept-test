@@ -18,12 +18,12 @@ public class TCPMachine extends Machine{
 	public TCPMachine(String name, int port) {
 		super(name);
 		if (port < 0) {
-			throw new IllegalArgumentException("cannot create tcp machine with " 
+			throw new IllegalArgumentException(getTag()+"cannot create tcp machine with " 
 				+ port + " port, less than 0");
 		}
 		
 		if (port > 65535) {
-			throw new IllegalArgumentException("cannot create tcp machine with " 
+			throw new IllegalArgumentException(getTag()+"cannot create tcp machine with " 
 					+ port + " port, more than 65535");
 		}
 		
@@ -37,7 +37,7 @@ public class TCPMachine extends Machine{
 		this(name, port);
 		
 		if (host == null) {
-			throw new IllegalArgumentException("cannot create tcp machine with host: null");
+			throw new IllegalArgumentException(getTag()+"cannot create tcp machine with host: null");
 		}
 		
 		this.host = host;
@@ -48,13 +48,13 @@ public class TCPMachine extends Machine{
 			@SuppressWarnings("resource")
 			ServerSocket server = new ServerSocket(port, 0,
 					InetAddress.getByName(host));
-			System.out.println("machine \""+getName()+"\" started");
+			System.out.println(getTag()+"machine \""+getName()+"\" started");
 			while(true)	{
 				new TCPMachineServer(this, server.accept());
 			}
 			
 		} catch(Exception e) {
-			System.out.println("init error: "+e);
+			System.out.println(getTag()+"tcp machine init error: "+e);
 		} 
 	}
 
@@ -62,7 +62,7 @@ public class TCPMachine extends Machine{
 	public void submitStart(ObjectOutputStream os) {
 		try {
 			os.writeObject(new Message(MessageType.TASK_START, getStartString(), getCurrentTask()));
-			System.out.println("submitStart: "+getStartString());
+			System.out.println(getTag()+"submitStart: "+getStartString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -73,7 +73,7 @@ public class TCPMachine extends Machine{
 	public void submitEnd(ObjectOutputStream os) {
 		try {
 			os.writeObject(new Message(MessageType.TASK_DONE, getEndString(), getCurrentTask()));
-			System.out.println("submitEnd: "+getEndString());
+			System.out.println(getTag()+"submitEnd: "+getEndString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -84,7 +84,7 @@ public class TCPMachine extends Machine{
 	public void submitError(ObjectOutputStream os) {
 		try {
 			os.writeObject(new Message(MessageType.TASK_ERROR, getErrorString(), getCurrentTask()));
-			System.out.println("submitError: "+getErrorString());
+			System.out.println(getTag()+"submitError: "+getErrorString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -95,7 +95,7 @@ public class TCPMachine extends Machine{
 	public void submitMessage(ObjectOutputStream os, String string) {
 		try {
 			os.writeObject(new Message(MessageType.MESSAGE, string, getCurrentTask()));
-			System.out.println("submitMessage: "+ string);
+			System.out.println(getTag()+"submitMessage: "+ string);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -103,19 +103,19 @@ public class TCPMachine extends Machine{
 	
 	public void shutdownMessage(ObjectOutputStream os) {
 		try {
-			os.writeObject(new Message(MessageType.SHUTDOWNED, getShutdownString(), null));
+			os.writeObject(new Message(MessageType.SHUTDOWNED, getTag()+getShutdownString(), null));
 			os.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("shutdownMessage: "+getShutdownString());
+		System.out.println(getTag()+"shutdown");
 	}
 	
 	public static void main(String ... args) {
 		if (args.length <1) {
-			throw new IllegalArgumentException("there is no name parametr");
+			throw new IllegalArgumentException("Error creating TCPMachine. There is no name parametr");
 		} else if (args.length <2) {
-			throw new IllegalArgumentException("there is no port parametr");
+			throw new IllegalArgumentException("Error creating TCPMachine. There is no port parametr");
 		}
 		
 		String name = args[0];
@@ -124,11 +124,10 @@ public class TCPMachine extends Machine{
 		try {
 			port = Integer.valueOf(args[1]);
 		} catch (NumberFormatException e) {
-			throw new NumberFormatException("illegal port number: " + args[1]);
+			throw new NumberFormatException("Error creating TCPMachine. Illegal port number: " + args[1]);
 		}
 		
 		TCPMachine machine = new TCPMachine(name, port);
 		machine.startupServer();
 	}
-
 }

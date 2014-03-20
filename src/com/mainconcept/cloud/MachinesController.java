@@ -11,6 +11,7 @@ import com.mainconcept.cloud.model.Task;
 public class MachinesController {
 	
 	private List<String> executedTaskMsgs = new ArrayList<String>();
+	private List<Thread> executionThreads = new ArrayList<Thread>();
 	
 	private BlockingQueue<MachineIdent> freeMachinesQueue = new LinkedBlockingQueue<MachineIdent>();
 	
@@ -36,28 +37,41 @@ public class MachinesController {
 			throw new IllegalStateException("machines list is null. Check you appended machines");
 		}
 		
-		//TODO need to start new thread here
-			new Thread(new Runnable() {
-
-				@Override
-				public void run() {
-					MachineIdent mi;
-					try {
-						mi = freeMachinesQueue.take();
-						mi.getMachineHandler().handleTask(task);
-						freeMachinesQueue.put(mi);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+		Thread thread =	new Thread(new Runnable() {
+			@Override
+			public void run() {
+				MachineIdent mi;
+				try {
+					mi = freeMachinesQueue.take();
+					mi.getMachineHandler().handleTask(task);
+					freeMachinesQueue.put(mi);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
-				
-				
-			}).start();
-					
+			}
+		});
+		executionThreads.add(thread);
+		thread.start();
 	}
 
 	public List<String> getExecutedTaskMessages() {
 		return executedTaskMsgs;
+	}
+
+	public void waitForTasks() {
+		
+		for (Thread thread: executionThreads) {
+			if (thread.isAlive()) {
+				try {
+					thread.join();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		executionThreads.clear();
 	}
 
 }

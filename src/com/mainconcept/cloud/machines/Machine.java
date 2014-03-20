@@ -102,6 +102,10 @@ public abstract class Machine {
 		return "busy machine \""+ getName() + "\" task \""+getCurrentTask().getName()
 				+"\" at " + new Date();
 	}
+	
+	public String getTag() {
+		return ">>>>"+getName()+": ";
+	}
 		
 	private boolean isBusy() {
 		return busy;

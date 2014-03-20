@@ -21,12 +21,29 @@ public class CloudStarter {
 						mi.getStartupParametrs());
 				error = new Streamer(process.getErrorStream());
 				output = new Streamer(process.getInputStream());
+				
+				System.out.println(mi.getName()+": start machine");
+				
 				error.start();
-				output.start();			
+				output.start();
 				
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
+		}
+		
+		waitForMachinesStarted();
+	}
+
+	private static void waitForMachinesStarted() {
+		try {
+			Object o = new Object();
+			synchronized (o) {
+				o.wait(1000);
+			}
+		} catch (InterruptedException e) {
+			System.out.println("error creating machines");
+			throw new IllegalStateException("something went wrong during startup cloud");
 		}
 	}
 }
