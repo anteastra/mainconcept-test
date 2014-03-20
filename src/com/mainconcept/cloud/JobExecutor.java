@@ -33,6 +33,8 @@ public class JobExecutor {
 			List<String> msgs = controller.getExecutedTaskMessages();
 			
 			//TODO here should be result of performing tasks
+			System.out.println();
+			System.out.println("result:");
 			for (String msg: msgs) {
 				System.out.println(msg);
 			}

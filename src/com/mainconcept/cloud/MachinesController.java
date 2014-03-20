@@ -44,6 +44,8 @@ public class MachinesController {
 				try {
 					mi = freeMachinesQueue.take();
 					mi.getMachineHandler().handleTask(task);
+					executedTaskMsgs.add(mi.getMachineHandler().getResult());
+					//TODO maybe where should be sychronized block
 					freeMachinesQueue.put(mi);
 				} catch (InterruptedException e) {
 					e.printStackTrace();

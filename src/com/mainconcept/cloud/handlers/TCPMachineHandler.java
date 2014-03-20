@@ -12,11 +12,15 @@ import com.mainconcept.cloud.model.Message.MessageType;
 public class TCPMachineHandler implements MachineHandler{
 	
 	private String host;
+	private String name;
 	private int port;
+	
+	private String result;
 
-	public TCPMachineHandler(String host, int port) {
+	public TCPMachineHandler(String host, int port, String name) {
 		this.host = host;
-		this.port = port;		
+		this.port = port;	
+		this.name = name;
 	}
 	
 	@Override
@@ -39,7 +43,7 @@ public class TCPMachineHandler implements MachineHandler{
 			switch (msg.getMessageType()) {
 			case TASK_START:
 				System.out.println(msg.getMessage());
-				handleTaskStart(is, os);				
+				handleTaskStart(is, os, task);				
 				break;
 			case TASK_BUSY:
 				System.out.println(msg.getMessage());
@@ -57,16 +61,23 @@ public class TCPMachineHandler implements MachineHandler{
 		}	
 	}
 	
-	private static void handleTaskStart(ObjectInputStream is,
-			ObjectOutputStream os) throws ClassNotFoundException, IOException {
+	@Override
+	public String getResult() {
+		return result;
+	}
+	
+	private void handleTaskStart(ObjectInputStream is,
+			ObjectOutputStream os, Task task) throws ClassNotFoundException, IOException {
 		
 		Message msg = (Message) is.readObject();
 		switch (msg.getMessageType()) {
 		case TASK_ERROR:
 			System.out.println(msg.getMessage());
+			result = "ERROR: \""+task.getName()+"\" on machine \""+name+"\"";
 			break;
 		case TASK_DONE:
 			System.out.println(msg.getMessage());
+			result = "DONE: \""+task.getName()+"\" on machine \""+name+"\"";
 			break;
 		default:
 			break;			
