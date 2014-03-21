@@ -39,11 +39,13 @@ public class Task implements Serializable, Comparable<Task>{
 	public void perform(int expectSeconds) {
 		synchronized (taskMonitor) {
 			try {
-				taskMonitor.wait(expectSeconds*1000);				
 				if (Math.random()>0.5) {
 					taskMonitor.wait((long) (expectSeconds*Math.random()*1000));
 					throw new RuntimeException();
+				} else {				
+					taskMonitor.wait(expectSeconds*1000);
 				}
+				
 			} catch (InterruptedException e) {
 				throw new RuntimeException();
 			}

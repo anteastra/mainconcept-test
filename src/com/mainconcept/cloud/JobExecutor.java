@@ -6,8 +6,20 @@ import java.util.List;
 import com.mainconcept.cloud.model.MachineIdent;
 import com.mainconcept.cloud.model.Task;
 
+/**
+ * This class represents logic of job execution
+ * 
+ * @author anteastra
+ *
+ */
 public class JobExecutor {
 	
+	/**
+	 * For start perform tasks, send here task list and machine idents list
+	 *  
+	 * @param tasks
+	 * @param machines
+	 */
 	public static void dispatch(List<Task> tasks, List<MachineIdent> machines) {
 		System.out.println();
 		System.out.println("---------Startup cloud job executor---------");

@@ -9,6 +9,11 @@ import com.mainconcept.cloud.model.Message;
 import com.mainconcept.cloud.model.Task;
 import com.mainconcept.cloud.model.Message.MessageType;
 
+/**
+ * TCP realisation of machine
+ * @author anteastra
+ *
+ */
 public class TCPMachineHandler implements MachineHandler{
 	
 	private String host;
@@ -17,12 +22,20 @@ public class TCPMachineHandler implements MachineHandler{
 	
 	private String result;
 
+	/**
+	 * @param host
+	 * @param port
+	 * @param name
+	 */
 	public TCPMachineHandler(String host, int port, String name) {
 		this.host = host;
 		this.port = port;	
 		this.name = name;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.mainconcept.cloud.handlers.MachineHandler#handleTask(com.mainconcept.cloud.model.Task)
+	 */
 	@Override
 	public void handleTask(Task task) {
 		try {
@@ -61,6 +74,9 @@ public class TCPMachineHandler implements MachineHandler{
 		}	
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.mainconcept.cloud.handlers.MachineHandler#getResult()
+	 */
 	@Override
 	public String getResult() {
 		return result;

@@ -6,6 +6,12 @@ import com.mainconcept.cloud.handlers.KeyHandler;
 import com.mainconcept.cloud.model.MachineIdent;
 import com.mainconcept.cloud.model.Task;
 
+/**
+ * Main entry in program. This class dispatch work way.
+ * 
+ * @author anteastra
+ *
+ */
 public class Dispatcher {
 
 	/**

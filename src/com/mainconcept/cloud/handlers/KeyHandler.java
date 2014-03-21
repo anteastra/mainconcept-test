@@ -10,6 +10,12 @@ import com.mainconcept.cloud.loaders.TasksLoaderFactory;
 import com.mainconcept.cloud.model.MachineIdent;
 import com.mainconcept.cloud.model.Task;
 
+/**
+ * Class to handle key parametrs
+ * 
+ * @author anteastra
+ *
+ */
 public class KeyHandler {
 	
 	
@@ -25,6 +31,10 @@ public class KeyHandler {
 	
 	private String[] keys;
 	
+	/**
+	 * You should put here the main arguments 
+	 * @param args
+	 */
 	public KeyHandler(String ... args) {
 		
 		keys = args;
@@ -52,18 +62,31 @@ public class KeyHandler {
 		}
 	}	
 
+	/**
+	 * 
+	 * @return task list, if it exists
+	 */
 	public List<Task> getTaskList() {
 		return tList;		
 	}
 	
+	/**
+	 * @return  machine list, if it exists
+	 */
 	public List<MachineIdent> getMachinesIdentList() {
 		return mList;		
 	}
 	
+	/**
+	 * @return true if there start key
+	 */
 	public boolean isStarting() {
 		return start;
 	}
 
+	/**
+	 * @return true if there stop key
+	 */
 	public boolean isStoping() {
 		return stop;
 	}

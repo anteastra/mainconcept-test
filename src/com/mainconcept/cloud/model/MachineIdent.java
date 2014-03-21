@@ -9,6 +9,8 @@ public abstract class MachineIdent {
 
 	public abstract String getMachineClass();
 	public abstract String getStartupParametrs();
+	public abstract void stopMachine();
+	public abstract void startMachine();
 	
 	public MachineIdent(String name) {
 		this.name = name;
