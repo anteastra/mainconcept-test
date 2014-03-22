@@ -1,6 +1,7 @@
 package com.mainconcept.cloud;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -16,7 +17,7 @@ import com.mainconcept.cloud.model.Task;
  */
 public class MachinesController {
 	
-	private List<String> executedTaskMsgs = new ArrayList<String>();
+	private List<String> executedTaskMsgs = Collections.synchronizedList(new ArrayList<String>());
 	private List<Thread> executionThreads = new ArrayList<Thread>();
 	
 	private BlockingQueue<MachineIdent> freeMachinesQueue = new LinkedBlockingQueue<MachineIdent>();
@@ -33,12 +34,10 @@ public class MachinesController {
 		}
 				
 		for (MachineIdent mi: machinesIdent) {
-			synchronized (freeMachinesQueue) {
-				try {
-					freeMachinesQueue.put(mi);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+			try {
+				freeMachinesQueue.put(mi);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}		
 	}
@@ -63,7 +62,6 @@ public class MachinesController {
 					mi = freeMachinesQueue.take();
 					mi.getMachineHandler().handleTask(task);
 					executedTaskMsgs.add(mi.getMachineHandler().getResult());
-					//TODO maybe where should be sychronized block
 					freeMachinesQueue.put(mi);
 				} catch (InterruptedException e) {
 					e.printStackTrace();

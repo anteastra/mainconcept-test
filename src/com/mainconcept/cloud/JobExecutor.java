@@ -1,6 +1,7 @@
 package com.mainconcept.cloud;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import com.mainconcept.cloud.model.MachineIdent;
@@ -46,8 +47,12 @@ public class JobExecutor {
 			
 			System.out.println();
 			System.out.println("result:");
-			for (String msg: msgs) {
-				System.out.println(msg);
+			
+			synchronized (msgs) {
+			      Iterator<String> i = msgs.iterator(); 
+			      while (i.hasNext()) {
+			    	  System.out.println(i.next());
+				}
 			}
 		
 		} catch(Exception e) {
